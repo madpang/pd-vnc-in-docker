@@ -1,0 +1,5 @@
+# --- private files
+.private.*
+
+# --- auxiliary files
+.vscode/
