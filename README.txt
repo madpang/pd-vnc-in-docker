@@ -8,3 +8,20 @@
 +++
 
 VNC server inside Docker container that can be deployed on a headless remote server.
+
+=== Usage
+
+1. Launch the Docker container:
++++ cmd from host
+docker run -p 5901:5901 -d pd-vnc-in-docker
++++
+
+2. Connect to the VNC server using a VNC client:
+    - URL: vnc://<host-ip>:1
+    - Password: see Dockerfile for default password
+
+=== Notes
+
+Possible color depth for VNC is 8, 16, 24, 32.
+The first two---8 bit and 16 bit---are for legacy systems and are not recommended for modern use.
+Most VNC clients does not support alpha channel, so 24 bit (true RGB) is the common choice.
