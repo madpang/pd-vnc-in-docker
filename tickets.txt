@@ -1,0 +1,36 @@
++++ header
+@file: pd-vnc-in-docker/tickets.txt
++++
+
+=== Ticket 1
+
+@brief:
+Setup noVNC server, since it seems to have better performance than conventional VNC.
+
+@status: TODO
+
+@date:
+- created on 2025-05-07
+- updated on 2025-05-07
+
+=== Ticket 2
+
+@brief:
+Run the GUI session with a non-root user, since it is more natural akin to a real desktop environment.
+
+@status: TODO
+
+@date:
+- created on 2025-05-07
+- updated on 2025-05-07
+
+=== Ticket 3
+
+@brief:
+Setup a RDP server, since it gives the best visual experience.
+
+@status: TODO
+
+@date:
+- created on 2025-05-07
+- updated on 2025-05-07
