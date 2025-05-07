@@ -18,7 +18,7 @@ Setup noVNC server, since it seems to have better performance than conventional 
 @brief:
 Run the GUI session with a non-root user, since it is more natural akin to a real desktop environment.
 
-@status: TODO
+@status: DONE
 
 @date:
 - created on 2025-05-07
