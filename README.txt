@@ -20,6 +20,11 @@ docker run -p 5901:5901 -d pd-vnc-in-docker
     - URL: vnc://<host-ip>:1
     - Password: see Dockerfile for default password
 
+=== Changelog
+
+- v1.0.0: a minimal demo. of VNC server running in a Docker container.
+- v1.1.0: a more realistic GUI session with a non-root user login.
+
 === Notes
 
 Possible color depth for VNC is 8, 16, 24, 32.
