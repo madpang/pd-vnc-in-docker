@@ -32,9 +32,10 @@ ENV PD_SCREEN_DPI=${VNC_SCREEN_DPI}
 # === Install packages ===
 # Install core packages
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y \
         dbus-x11 \
-        xfce4 \
+        xfce4 xfce4-goodies \
         tightvncserver
 
 # --- Set VNC server
@@ -48,7 +49,7 @@ RUN touch /root/.Xauthority && \
     xauth add $DISPLAY MIT-MAGIC-COOKIE-1 $(mcookie)
 
 # Create a startup script for VNC
-RUN echo -e '#!/bin/bash\nstartxfce4 &' > /root/.vnc/xstartup && \
+RUN echo -e '#!/bin/bash\nvncconfig -iconic &\ndbus-launch --exit-with-session startxfce4 &' > /root/.vnc/xstartup && \
     chmod +x /root/.vnc/xstartup
 
 # === Launchpad ===
@@ -56,4 +57,4 @@ RUN echo -e '#!/bin/bash\nstartxfce4 &' > /root/.vnc/xstartup && \
 EXPOSE 5901/tcp
 
 # Set the default command (to keep the container alive)
-CMD vncserver $DISPLAY -geometry $PD_SCREEN_SIZE -depth $PD_COLOR_DEPTH -dpi $PD_SCREEN_DPI && tail -f /dev/null
+CMD vncserver $DISPLAY -geometry $PD_SCREEN_SIZE -depth $PD_COLOR_DEPTH -dpi $PD_SCREEN_DPI && tail -f /root/.vnc/*:1.log
