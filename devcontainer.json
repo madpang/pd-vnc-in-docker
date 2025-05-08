@@ -1,0 +1,23 @@
+{
+	"name": "pd-vnc-in-docker",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"runArgs": [
+        "--publish", "0.0.0.0:5901:5901/tcp",
+        "--shm-size=2g"
+	],	
+	"workspaceMount": "type=bind,src=${localWorkspaceFolder},target=/home/ubuntu/ws/${localWorkspaceFolderBasename}",
+	"workspaceFolder": "/home/ubuntu/ws/${localWorkspaceFolderBasename}",
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"eamodio.gitlens",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "streetsidesoftware.code-spell-checker"
+			]
+		}
+	}
+}
