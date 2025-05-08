@@ -40,11 +40,11 @@ Setup a RDP server, since it gives the best visual experience.
 @brief:
 Make this repo. functional as a VS Code dev container.
 
-@status: TODO
+@status: INPROGRESS
 
 @date:
 - created on 2025-05-07
-- updated on 2025-05-07
+- updated on 2025-05-08
 
 @details:
 Making this repo. functional as a VS Code dev container would be more useful for practical development.

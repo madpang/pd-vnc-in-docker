@@ -20,6 +20,15 @@ docker run -p 5901:5901 -d pd-vnc-in-docker
     - URL: vnc://<host-ip>:1
     - Password: see Dockerfile for default password
 
+--- Advanced Usage
+
+docker run \
+  --name qt-vnc \
+  -p 5901:5901 \
+  --shm-size 2g \
+  --mount type=bind,source=/home/madpang/Workspace4/heap/qt6-build,target=/home/ubuntu/ws \
+  -it pd-vnc-in-docker:latest /bin/bash
+
 === Changelog
 
 - v1.0.0: a minimal demo. of VNC server running in a Docker container.

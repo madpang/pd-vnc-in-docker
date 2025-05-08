@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# @brief: Start a VNC server
+# @note: Those parameters should be set in the environment
+
+vncserver $DISPLAY -geometry $PD_SCREEN_SIZE -depth $PD_COLOR_DEPTH -dpi $PD_SCREEN_DPI
