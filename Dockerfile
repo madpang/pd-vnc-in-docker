@@ -8,6 +8,8 @@ ARG VNC_COLOR_DEPTH='24'
 ARG VNC_SCREEN_DPI='96'
 # Use the default non-root user on Ubuntu
 ARG USERNAME='ubuntu'
+ARG USER_UID='1000'
+ARG USER_GID=${USER_UID}
 
 # === Install packages ===
 # Use bash for the image building
@@ -15,9 +17,11 @@ SHELL ["/bin/bash", "-c"]
 # Set the timezone
 ENV TZ=${TIMEZONE}
 # Set the default locale to UTF-8
-ENV LANG="C.UTF-8"
+ENV LANG='C.UTF-8'
 # Define an environment variable as an identifier
 ENV MY_ENV='pd-vnc-in-docker'
+# Create necessary directories
+RUN mkdir -m 0755 /run/user
 # Install core packages
 RUN apt-get update && \
 	apt-get upgrade -y && \
@@ -48,6 +52,13 @@ ENV DISPLAY=':1'
 ENV PD_SCREEN_SIZE=${VNC_SCREEN_SIZE}
 ENV PD_COLOR_DEPTH=${VNC_COLOR_DEPTH}
 ENV PD_SCREEN_DPI=${VNC_SCREEN_DPI}
+# Set the X Desktop Group runtime directory since no login manager is used
+ENV XDG_RUNTIME_DIR="/run/user/${USER_UID}"
+
+# --- Set the GPG directory
+# Create the necessary directory structure for gpg socket
+RUN sudo mkdir -m 0700 /run/user/${USER_UID} \
+	&& sudo chown ${USER_UID}:${USER_GID} /run/user/${USER_UID}
 
 # --- Set VNC server
 RUN mkdir $HOME/.vnc

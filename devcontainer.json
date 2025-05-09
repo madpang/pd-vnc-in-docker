@@ -4,6 +4,8 @@
 		"dockerfile": "Dockerfile"
 	},
 	"runArgs": [
+		"--mount", "type=bind,src=${localEnv:HOME}/.gnupg,dst=/home/ubuntu/.gnupg,readonly",
+		"--mount", "type=bind,src=/run/user/1000/gnupg,dst=/run/user/1000/gnupg,readonly",
         "--publish", "0.0.0.0:5901:5901/tcp",
         "--shm-size=2g"
 	],	
