@@ -48,3 +48,4 @@ Make this repo. functional as a VS Code dev container.
 
 @details:
 Making this repo. functional as a VS Code dev container would be more useful for practical development.
+VS Code devcontainer has added bonus of git credential forwarding, ssh agent forwarding, gpg agent forwarding which are useful for development.

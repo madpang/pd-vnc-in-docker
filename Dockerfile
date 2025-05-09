@@ -25,7 +25,10 @@ RUN apt-get update && \
 		dbus-x11 \
 		xfce4 xfce4-goodies \
 		tightvncserver \
-		sudo
+		sudo \
+		openssh-client gnupg \
+		git wget \
+		nano
 
 # Grant sudo privileges to the non-root user
 RUN echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
