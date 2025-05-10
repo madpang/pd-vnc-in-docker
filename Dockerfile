@@ -30,6 +30,9 @@ RUN apt-get update && \
 		openssh-client gnupg \
 		git wget \
 		nano
+# Install Qt6 dev packages
+COPY --chmod=0755 ./copy/src/install/qt6_dev_setup.sh /tmp/qt6_dev_setup.sh
+RUN /tmp/qt6_dev_setup.sh
 
 # Grant sudo privileges to the non-root user
 RUN echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
