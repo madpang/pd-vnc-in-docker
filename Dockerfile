@@ -3,9 +3,6 @@ FROM ubuntu:24.04
 
 # === Arguments ===
 ARG TIMEZONE='Asia/Tokyo'
-ARG VNC_SCREEN_SIZE='1512x982'
-ARG VNC_COLOR_DEPTH='24'
-ARG VNC_SCREEN_DPI='96'
 # Use the default non-root user on Ubuntu
 ARG USERNAME='ubuntu'
 ARG USER_UID='1000'
@@ -48,10 +45,6 @@ ENV USER=${USERNAME}
 ENV HOME="/home/${USERNAME}"
 # Set the display
 ENV DISPLAY=':1'
-# Pass ARG values to ENV for runtime usage
-ENV PD_SCREEN_SIZE=${VNC_SCREEN_SIZE}
-ENV PD_COLOR_DEPTH=${VNC_COLOR_DEPTH}
-ENV PD_SCREEN_DPI=${VNC_SCREEN_DPI}
 # Set the X Desktop Group runtime directory since no login manager is used
 ENV XDG_RUNTIME_DIR="/run/user/${USER_UID}"
 
