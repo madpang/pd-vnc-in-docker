@@ -40,11 +40,20 @@ Setup a RDP server, since it gives the best visual experience.
 @brief:
 Make this repo. functional as a VS Code dev container.
 
-@status: TODO
+@status: DONE
 
 @date:
 - created on 2025-05-07
-- updated on 2025-05-07
+- updated on 2025-05-09
 
 @details:
 Making this repo. functional as a VS Code dev container would be more useful for practical development.
+VS Code devcontainer has added bonus of git credential forwarding, ssh agent forwarding, gpg agent forwarding which are useful for development.
+
+According to GPT:
+> The discrepancy in the GPG agent socket path between a regular Ubuntu installation and Ubuntu running in Docker is due to differences in the *XDG runtime directory environment*, which is governed by the `XDG_RUNTIME_DIR` environment variable.
+
+On modern Linux systems (like desktop Ubuntu), the login manager (systemd, lightdm, etc.) creates a runtime directory for each user at `/run/user/<uid>`. This is pointed to by the environment variable `XDG_RUNTIME_DIR`.
+However, in a Docker container, there is usually no login manager, and the `XDG_RUNTIME_DIR` variable is not set, which leads the GPG agent falling back to `/home/ubuntu/.gnupg/S.gpg-agent` (note `ubuntu` is the default non-root user in Ubuntu based container).
+
+Manually creating the directory and setting the environment variable in the Dockerfile should is crucial for gpg agent forwarding to work in the container.

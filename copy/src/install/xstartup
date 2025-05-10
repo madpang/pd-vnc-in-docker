@@ -1,0 +1,4 @@
+#!/bin/bash
+
+vncconfig -iconic &
+dbus-launch --exit-with-session startxfce4 &

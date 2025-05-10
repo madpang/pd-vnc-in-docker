@@ -1,3 +1,4 @@
+# @brief: Build an Ubuntu 24.04 based with VNC server
 FROM ubuntu:24.04
 
 # === Arguments ===
@@ -7,6 +8,8 @@ ARG VNC_COLOR_DEPTH='24'
 ARG VNC_SCREEN_DPI='96'
 # Use the default non-root user on Ubuntu
 ARG USERNAME='ubuntu'
+ARG USER_UID='1000'
+ARG USER_GID=${USER_UID}
 
 # === Install packages ===
 # Use bash for the image building
@@ -14,9 +17,11 @@ SHELL ["/bin/bash", "-c"]
 # Set the timezone
 ENV TZ=${TIMEZONE}
 # Set the default locale to UTF-8
-ENV LANG="C.UTF-8"
+ENV LANG='C.UTF-8'
 # Define an environment variable as an identifier
 ENV MY_ENV='pd-vnc-in-docker'
+# Create necessary directories
+RUN mkdir -m 0755 /run/user
 # Install core packages
 RUN apt-get update && \
 	apt-get upgrade -y && \
@@ -24,7 +29,10 @@ RUN apt-get update && \
 		dbus-x11 \
 		xfce4 xfce4-goodies \
 		tightvncserver \
-		sudo
+		sudo \
+		openssh-client gnupg \
+		git wget \
+		nano
 
 # Grant sudo privileges to the non-root user
 RUN echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
@@ -44,18 +52,31 @@ ENV DISPLAY=':1'
 ENV PD_SCREEN_SIZE=${VNC_SCREEN_SIZE}
 ENV PD_COLOR_DEPTH=${VNC_COLOR_DEPTH}
 ENV PD_SCREEN_DPI=${VNC_SCREEN_DPI}
+# Set the X Desktop Group runtime directory since no login manager is used
+ENV XDG_RUNTIME_DIR="/run/user/${USER_UID}"
+
+# --- Set the GPG directory
+# Create the necessary directory structure for gpg socket
+RUN sudo mkdir -m 0700 /run/user/${USER_UID} \
+	&& sudo chown ${USER_UID}:${USER_GID} /run/user/${USER_UID}
 
 # --- Set VNC server
+RUN mkdir $HOME/.vnc
+# Copy the VNC server configuration files
+COPY --chmod=0755 ./copy/src/install/xstartup $HOME/.vnc/xstartup
 # Set the VNC server password
-RUN mkdir -p $HOME/.vnc && \
-	echo 'panda+' | vncpasswd -f > $HOME/.vnc/passwd && \
+RUN echo 'panda+' | vncpasswd -f > $HOME/.vnc/passwd && \
 	chmod 600 $HOME/.vnc/passwd
 # Generate Xauthority file
 RUN touch $HOME/.Xauthority && \
 	xauth add $DISPLAY MIT-MAGIC-COOKIE-1 $(mcookie)
-# Create a startup script for VNC
-RUN echo -e '#!/bin/bash\nvncconfig -iconic &\ndbus-launch --exit-with-session startxfce4 &' > $HOME/.vnc/xstartup && \
-	chmod +x $HOME/.vnc/xstartup
+
+# --- Deploy the service scripts
+RUN mkdir $HOME/service
+COPY --chmod=0755 ./copy/src/service/start_vnc_server $HOME/service/start_vnc_server
+
+# --- Add the service directory to the PATH
+ENV PATH="${HOME}/service:${PATH}"
 
 # === Launchpad ===
 # Expose the VNC port
@@ -65,4 +86,6 @@ EXPOSE 5901/tcp
 WORKDIR $HOME/ws
 
 # Set the default command (to keep the container alive)
-CMD vncserver $DISPLAY -geometry $PD_SCREEN_SIZE -depth $PD_COLOR_DEPTH -dpi $PD_SCREEN_DPI && tail -f $HOME/.vnc/*:1.log
+CMD echo "PLEASE LOGIN TO THE CONTAINER AND RUN THE SERVICE MANUALLY" && \
+	echo "@host: docker run -p <host-port>:5901 -it <image-name> bash" && \
+	echo "@container: start_vnc_server"
