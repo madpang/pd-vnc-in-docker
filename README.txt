@@ -2,9 +2,10 @@
 @file: pd-vnc-in-docker/README.txt
 @date:
 - created on 2025-05-06
-- updated on 2025-05-07
+- updated on 2025-05-10
 @author:
 - madpang
+- t-tang-rfc
 +++
 
 VNC server inside Docker container that can be deployed on a headless remote server.
@@ -13,11 +14,11 @@ VNC server inside Docker container that can be deployed on a headless remote ser
 
 To use this Docker image as a dev container in VS Code:
 1. `cd` into your <project-folder>
-2. `git submodule add --branch main https://github.com/madpang/pd-imagine.git .devcontainer`
+2. `git submodule add --branch main https://github.com/madpang/pd-vnc-in-docker.git .devcontainer`
 3. Open the workspace folder in VS Code, via `code .`
 4. Use VS Code command "Dev Containers: Reopen in Container" to start the container
 @see: [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers).
-If you do not want to embed this project as a submodule, you can also create a `.devcontainer` symbolic link to the `pd-imagine` folder.
+If you do not want to embed this project as a submodule, you can also create a `.devcontainer` symbolic link to the `pd-vnc-in-docker` folder.
 
 5. Launch the VNC server
 +++ console@container
@@ -25,8 +26,8 @@ If you do not want to embed this project as a submodule, you can also create a `
 +++
 
 6. Connect to the VNC server using a VNC client:
-    - URL: vnc://<host-ip>:1
-    - Password: see Dockerfile for default password
+	- URL: vnc://<host-ip>:1
+	- Password: see Dockerfile for default password
 
 NOTE, currently, if using "open folder in dev container" feature in VS Code, the container will NOT automatically stop when you close the connection.
 You need to manually stop the container by executing `docker stop <container-id>` on the host machine.
