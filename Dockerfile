@@ -56,7 +56,7 @@ RUN sudo mkdir -m 0700 /run/user/${USER_UID} \
 # --- Set VNC server
 RUN mkdir $HOME/.vnc
 # Copy the VNC server configuration files
-COPY --chmod=0755 ./copy/src/install/xstartup $HOME/.vnc/xstartup
+COPY --chmod=0755 ./copy/src/config/xstartup $HOME/.vnc/xstartup
 # Set the VNC server password
 RUN echo 'panda+' | vncpasswd -f > $HOME/.vnc/passwd && \
 	chmod 600 $HOME/.vnc/passwd
