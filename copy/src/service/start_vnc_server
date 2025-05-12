@@ -1,10 +1,14 @@
 #!/bin/bash
 
-# @brief: Start a VNC server
-# @note: The DISPLAY variable should be set in the environment
+# @brief: Start a VNC server and a noVNC server
+# @note:
+# - The DISPLAY variable should be set in the environment
+# - The VNC/noVNC ports should also be set in the environment
 
 VNC_SCREEN_SIZE='1920x1080'
 VNC_COLOR_DEPTH='24'
 VNC_SCREEN_DPI='96'
 
 vncserver $DISPLAY -geometry ${VNC_SCREEN_SIZE} -depth ${VNC_COLOR_DEPTH} -dpi ${VNC_SCREEN_DPI}
+
+websockify --daemon --web=/usr/share/novnc/ "$PD_NOVNC_PORT" "localhost:$PD_VNC_PORT"
