@@ -25,7 +25,7 @@ RUN apt-get update && \
 	apt-get install -y \
 		dbus-x11 \
 		xfce4 xfce4-goodies \
-		tightvncserver \
+		tightvncserver novnc \
 		sudo \
 		openssh-client gnupg \
 		git wget \
