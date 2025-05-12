@@ -7,7 +7,7 @@
 @brief:
 Setup noVNC server, since it seems to have better performance than conventional VNC.
 
-@status: INPROGRESS
+@status: DONE
 
 @date:
 - created on 2025-05-07
