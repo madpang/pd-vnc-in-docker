@@ -7,11 +7,18 @@
 @brief:
 Setup noVNC server, since it seems to have better performance than conventional VNC.
 
-@status: TODO
+@status: DONE
 
 @date:
 - created on 2025-05-07
-- updated on 2025-05-07
+- updated on 2025-05-12
+
+@details:
+When working with HiDPI displays, modern browser usually handles scaling better than VNC clients, that is why noVNC is preferred.
+
+@see:
+- [noVNC @GitHub](https://github.com/novnc/noVNC)
+- [noVNC Official Website](https://novnc.com/)
 
 === Ticket 2
 

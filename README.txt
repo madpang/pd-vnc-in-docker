@@ -2,7 +2,7 @@
 @file: pd-vnc-in-docker/README.txt
 @date:
 - created on 2025-05-06
-- updated on 2025-05-10
+- updated on 2025-05-12
 @author:
 - madpang
 - t-tang-rfc
@@ -20,14 +20,15 @@ To use this Docker image as a dev container in VS Code:
 @see: [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers).
 If you do not want to embed this project as a submodule, you can also create a `.devcontainer` symbolic link to the `pd-vnc-in-docker` folder.
 
-5. Launch the VNC server
+5. Launch the VNC/noVNC server
 +++ console@container
 : start_vnc_server
 +++
 
-6. Connect to the VNC server using a VNC client:
-	- URL: vnc://<host-ip>:1
-	- Password: see Dockerfile for default password
+6. Connect to the VNC server using a web browser or a VNC client:
+	- if using Web browser: http://<host-ip>:6080
+	- if using VNC client: vnc://<host-ip>:5901
+	(*) See Dockerfile for default password
 
 NOTE, currently, if using "open folder in dev container" feature in VS Code, the container will NOT automatically stop when you close the connection.
 You need to manually stop the container by executing `docker stop <container-id>` on the host machine.

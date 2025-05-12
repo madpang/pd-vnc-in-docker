@@ -7,6 +7,10 @@ ARG TIMEZONE='Asia/Tokyo'
 ARG USERNAME='ubuntu'
 ARG USER_UID='1000'
 ARG USER_GID=${USER_UID}
+# VNC Port fixed to 5901
+# The VNC server will be started on display :1
+# noVNC port is set to 6901
+ARG NOVNC_PORT='6901'
 
 # === Install packages ===
 # Use bash for the image building
@@ -25,7 +29,7 @@ RUN apt-get update && \
 	apt-get install -y \
 		dbus-x11 \
 		xfce4 xfce4-goodies \
-		tightvncserver \
+		tightvncserver novnc \
 		sudo \
 		openssh-client gnupg \
 		git wget \
@@ -47,6 +51,10 @@ ENV HOME="/home/${USERNAME}"
 ENV DISPLAY=':1'
 # Set the X Desktop Group runtime directory since no login manager is used
 ENV XDG_RUNTIME_DIR="/run/user/${USER_UID}"
+# Set the VNC server port
+ENV PD_VNC_PORT='5901'
+# Set the noVNC port
+ENV PD_NOVNC_PORT=${NOVNC_PORT}
 
 # --- Set the GPG directory
 # Create the necessary directory structure for gpg socket
@@ -69,14 +77,14 @@ RUN mkdir $HOME/service
 COPY --chmod=0755 ./copy/src/service/start_vnc_server $HOME/service/start_vnc_server
 
 # --- Add the service directory to the PATH
-ENV PATH="${HOME}/service:${PATH}"
+ENV PATH="$HOME/service:$PATH"
 
 # === Launchpad ===
 # Expose the VNC port
-EXPOSE 5901/tcp
+EXPOSE "$PD_VNC_PORT/tcp" "$PD_NOVNC_PORT/tcp"
 
 # Set the working directory in the *container*
-WORKDIR $HOME/ws
+WORKDIR "$HOME/ws"
 
 # Set the default command (to keep the container alive)
 CMD echo "PLEASE LOGIN TO THE CONTAINER AND RUN THE SERVICE MANUALLY" && \
